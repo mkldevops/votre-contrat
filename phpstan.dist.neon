@@ -1,8 +1,21 @@
 parameters:
-    level: 6
+    level: 9
+    treatPhpDocTypesAsCertain: false
     paths:
         - bin/
         - config/
         - public/
         - src/
         - tests/
+
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+
+    #doctrine :
+    #    objectManagerLoader : tests/object-manager.php
+
+    excludePaths:
+        - src/Kernel.php
+
+    checkGenericClassInNonGenericObjectType: false
+

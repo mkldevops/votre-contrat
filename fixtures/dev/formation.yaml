@@ -1,0 +1,16 @@
+App\Entity\Formation:
+  formation_esthetic:
+    company: "@company_esthetic_center"
+    name: "Esthetic formation"
+    description: <sentence()>
+    price: 1000
+  formation_make_up:
+    company: "@company_esthetic_center"
+    name: "Make-up formation"
+    description: <sentence()>
+    price: 1500
+  formation_web_developer:
+    company: "@company_it_center"
+    name: Web developer formation
+    description: <sentence()>
+    price: 2500

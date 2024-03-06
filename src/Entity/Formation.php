@@ -2,17 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\IdEntityTrait;
+use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\FormationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
-class Formation
+class Formation implements EntityInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use IdEntityTrait;
+    use TimestampableEntityTrait;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -23,9 +23,13 @@ class Formation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    public function getId(): ?int
+    #[ORM\ManyToOne(inversedBy: 'formations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Company $company = null;
+
+    public function __toString(): string
     {
-        return $this->id;
+        return (string) $this->name;
     }
 
     public function getName(): ?string
@@ -60,6 +64,18 @@ class Formation
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): static
+    {
+        $this->company = $company;
 
         return $this;
     }
