@@ -48,7 +48,7 @@ doctrine-reset: database-drop doctrine-migrate
 doctrine-apply-migration: doctrine-reset doctrine-migration doctrine-reset  ## Apply doctrine migrate and reset database
 
 fixtures-load: #doctrine-reset ## Load fixtures
-	$(CONSOLE) doctrine:fixtures:load -n $q
+	$(CONSOLE) hautelook:fixtures:load -n $q
 lint:
 	$(CONSOLE) lint:container $q
 	$(CONSOLE) lint:yaml --parse-tags config/ $q

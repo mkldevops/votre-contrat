@@ -1,0 +1,7 @@
+App\Entity\Company:
+  company_esthetic_center:
+    name: "Esthetic Center"
+    picture: "/some-path"
+  company_it_center:
+    name: "IT Center"
+    picture: "/some-path"
