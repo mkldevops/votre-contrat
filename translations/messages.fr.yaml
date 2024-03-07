@@ -1,4 +1,5 @@
 Formation: Formation
+Formations: Formations
 User: Utilisateur
 Company: Société
 Name: Nom
@@ -8,3 +9,27 @@ Updated At: Modifié le
 ID: ID
 Description: Description
 Dashboard: Tableau de bord
+Duration: Durée
+Template: Modèle
+Email: Email
+Password: Mot de passe
+Start At: Commence le
+End At: Termine le
+Location: Lieu
+Phone: Téléphone
+Address: Adresse
+Postcode: Code postal
+City: Ville
+Amount: Montant
+Contractor: Contractant
+On site: Sur place
+Remote: À distance
+Hybrid: Hybride
+Contract: Contrat
+File Contract: Fichier de contrat
+Contracts: Contrats
+Security: Sécurité
+Configuration: Configuration
+Roles: Rôles
+Picture: Image
+

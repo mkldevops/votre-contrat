@@ -3,8 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Contract;
+use App\Entity\Enum\LocationEnum;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -29,7 +31,9 @@ class ContractCrudController extends AbstractCrudController
             ->hideOnForm();
         yield AssociationField::new('formation');
         yield TextField::new('fileContract')->hideOnForm();
-        yield Field::new('location');
+
+        yield ChoiceField::new('location')
+            ->formatValue(static fn (LocationEnum $value, Contract $entity) => $entity->getLocation()?->value);
         yield Field::new('duration')->hideOnForm();
 
         yield DateField::new('startAt');
