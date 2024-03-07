@@ -1,0 +1,7 @@
+App\Entity\Contract:
+  contract_esthetic_center_ahmed:
+    contractor: "Ahmed Salah"
+    formation: "@formation_web_developer"
+    startAt: <(new DateTimeImmutable('+3days 08:00'))>
+    endAt: <(new DateTimeImmutable('+15days 08:00'))>
+    location: sur site

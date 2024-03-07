@@ -24,6 +24,27 @@ class Company implements EntityInterface
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Formation::class, orphanRemoval: true)]
     private Collection $formations;
 
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 6)]
+    private ?string $postcode = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 180)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $activityNumber = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $representative = null;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
@@ -82,6 +103,90 @@ class Company implements EntityInterface
         if ($this->formations->removeElement($formation) && $formation->getCompany() === $this) {
             $formation->setCompany(null);
         }
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPostcode(): ?string
+    {
+        return $this->postcode;
+    }
+
+    public function setPostcode(string $postcode): static
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getActivityNumber(): ?string
+    {
+        return $this->activityNumber;
+    }
+
+    public function setActivityNumber(string $activityNumber): static
+    {
+        $this->activityNumber = $activityNumber;
+
+        return $this;
+    }
+
+    public function getRepresentative(): ?string
+    {
+        return $this->representative;
+    }
+
+    public function setRepresentative(string $representative): static
+    {
+        $this->representative = $representative;
 
         return $this;
     }
