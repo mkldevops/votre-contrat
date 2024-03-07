@@ -4,13 +4,19 @@ App\Entity\Formation:
     name: "Esthetic formation"
     description: <sentence()>
     price: 1000
+    duration: 30
+    template: basic
   formation_make_up:
     company: "@company_esthetic_center"
     name: "Make-up formation"
     description: <sentence()>
     price: 1500
+    duration: 60
+    template: basic
   formation_web_developer:
     company: "@company_it_center"
     name: Web developer formation
     description: <sentence()>
     price: 2500
+    duration: 50
+    template: basic

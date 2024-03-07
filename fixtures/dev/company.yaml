@@ -2,6 +2,20 @@ App\Entity\Company:
   company_esthetic_center:
     name: "Esthetic Center"
     picture: "/some-path"
+    address: 25 place de la Defense
+    postcode: 75450
+    city: Paris
+    representative: Asma Labidi
+    email: eshtetic@gmail.com
+    phone: +33 7 88 96 44 78
+    activityNumber: 01218613015412
   company_it_center:
     name: "IT Center"
     picture: "/some-path"
+    address: 25 bd de Paris
+    postcode: 13003
+    city: Marseille
+    representative: Asma Labidi
+    email: eshtetic@gmail.com
+    phone: +33 7 63 96 74 12
+    activityNumber: 798464924448
