@@ -1,7 +1,13 @@
 App\Entity\Contract:
   contract_esthetic_center_ahmed:
     contractor: "Ahmed Salah"
-    formation: "@formation_web_developer"
+    formation: "@formation_esthetic"
     startAt: <(new DateTimeImmutable('+3days 08:00'))>
     endAt: <(new DateTimeImmutable('+15days 08:00'))>
-    location: sur site
+    location: !php/enum App\Entity\Enum\LocationEnum::OnSite
+  contract_web_developer_djamal:
+    contractor: "Djamal Ben Salam"
+    formation: "@formation_web_developer"
+    startAt: <(new DateTimeImmutable('+15days 08:00'))>
+    endAt: <(new DateTimeImmutable('+27days 08:00'))>
+    location: !php/enum App\Entity\Enum\LocationEnum::OnSite

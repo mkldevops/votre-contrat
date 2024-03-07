@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Enum\LocationEnum;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\ContractRepository;
@@ -30,8 +31,8 @@ class Contract implements EntityInterface
     #[ORM\Column]
     private ?DateTimeImmutable $endAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $location = null;
+    #[ORM\Column(length: 255, options: ['default' => LocationEnum::OnSite->value])]
+    private ?LocationEnum $location = LocationEnum::OnSite;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fileContract = null;
@@ -106,12 +107,12 @@ class Contract implements EntityInterface
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): ?LocationEnum
     {
         return $this->location;
     }
 
-    public function setLocation(string $location): static
+    public function setLocation(LocationEnum $location): static
     {
         $this->location = $location;
 
