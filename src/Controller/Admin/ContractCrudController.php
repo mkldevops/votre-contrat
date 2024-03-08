@@ -4,6 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Contract;
 use App\Entity\Enum\LocationEnum;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -19,6 +22,19 @@ class ContractCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Contract::class;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $contractPDF = Action::new('contractPDF', 'PDF')
+            ->linkToRoute('app_contract_pdf', static fn (Contract $contract): array => ['id' => $contract->getId()])
+            ->setHtmlAttributes(['target' => '_blank'])
+        ;
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $contractPDF)
+            ->add(Crud::PAGE_DETAIL, $contractPDF)
+        ;
     }
 
     public function configureFields(string $pageName): iterable
