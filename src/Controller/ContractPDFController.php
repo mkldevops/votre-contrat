@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Contract;
 use Pontedilana\PhpWeasyPrint\Pdf;
 use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 
-#[Route('/contract-pdf', name: 'app_contract_pdf')]
+#[Route('/contract-pdf/{id}', name: 'app_contract_pdf')]
 class ContractPDFController extends AbstractController
 {
     public function __construct(
@@ -19,7 +20,7 @@ class ContractPDFController extends AbstractController
     ) {
     }
 
-    public function __invoke(): Response
+    public function __invoke(Contract $contract): Response
     {
         $html = $this->twig->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
