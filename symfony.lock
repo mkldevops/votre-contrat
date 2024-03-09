@@ -382,6 +382,9 @@
             "config/routes/web_profiler.yaml"
         ]
     },
+    "symfonycasts/tailwind-bundle": {
+        "version": "v0.5.1"
+    },
     "theofidry/alice-data-fixtures": {
         "version": "1.7",
         "recipe": {

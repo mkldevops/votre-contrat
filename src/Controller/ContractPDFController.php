@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 #[Route('/contract-pdf/{id}', name: 'app_contract_pdf')]
 class ContractPDFController extends AbstractController
@@ -20,11 +23,23 @@ class ContractPDFController extends AbstractController
     ) {
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function __invoke(Contract $contract): Response
     {
-        $html = $this->twig->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        if (null === ($template = $contract->getFormation()?->getTemplate()->getTemplatePath())) {
+            throw $this->createNotFoundException('Template not found');
+        }
+
+        $html = $this->twig->render(
+            name: $template,
+            context : [
+                'contract' => $contract,
+            ]
+        );
 
         $pdfContent = $this->weasyPrint->getOutputFromHtml($html);
 

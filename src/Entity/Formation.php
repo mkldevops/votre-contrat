@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Enum\TemplateEnum;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\FormationRepository;
@@ -31,7 +32,7 @@ class Formation implements EntityInterface
     private ?int $duration = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $template = null;
+    private TemplateEnum $template = TemplateEnum::basic;
 
     public function __toString(): string
     {
@@ -98,12 +99,12 @@ class Formation implements EntityInterface
         return $this;
     }
 
-    public function getTemplate(): ?string
+    public function getTemplate(): TemplateEnum
     {
         return $this->template;
     }
 
-    public function setTemplate(string $template): static
+    public function setTemplate(TemplateEnum $template): static
     {
         $this->template = $template;
 

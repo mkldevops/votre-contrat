@@ -20,6 +20,7 @@ use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle;
 use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
 use Hautelook\AliceBundle\HautelookAliceBundle;
+use Symfonycasts\TailwindBundle\SymfonycastsTailwindBundle;
 return [
     FrameworkBundle::class => ['all' => true],
     DoctrineBundle::class => ['all' => true],
@@ -41,4 +42,5 @@ return [
     NelmioAliceBundle::class => ['dev' => true, 'test' => true],
     FidryAliceDataFixturesBundle::class => ['dev' => true, 'test' => true],
     HautelookAliceBundle::class => ['dev' => true, 'test' => true],
+    SymfonycastsTailwindBundle::class => ['all' => true],
 ];

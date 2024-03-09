@@ -40,6 +40,10 @@ class Contract implements EntityInterface
     #[ORM\Column]
     private ?int $duration = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
+
     public function __toString(): string
     {
         return $this->contractor.' - '.$this->formation?->getName();
@@ -107,6 +111,15 @@ class Contract implements EntityInterface
         return $this;
     }
 
+    public function days(): int
+    {
+        if (!$this->startAt instanceof DateTimeImmutable || !$this->endAt instanceof DateTimeImmutable) {
+            return 0;
+        }
+
+        return (int) $this->startAt->diff($this->endAt)->days;
+    }
+
     public function getLocation(): ?LocationEnum
     {
         return $this->location;
@@ -139,6 +152,18 @@ class Contract implements EntityInterface
     public function setDuration(int $duration): static
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

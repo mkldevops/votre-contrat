@@ -32,7 +32,13 @@ composer-install:
 composer-update:
 	$(COMPOSER) update --with-all-dependencies
 
-database-drop:
+database-drop: ## Drop database
+	$(CONSOLE) doctrine:database:drop --force
+
+database-create: ## Drop database
+	$(CONSOLE) doctrine:database:create --if-not-exists
+
+database-schema-drop: ## Drop schema database
 	$(CONSOLE) doctrine:schema:drop --force --full-database
 
 doctrine-migration:
@@ -44,7 +50,7 @@ doctrine-migrate: ## Apply doctrine migrate
 doctrine-schema-create:
 	$(CONSOLE) doctrine:schema:create
 
-doctrine-reset: database-drop doctrine-migrate
+db-reset: database-drop databasecreate doctrine-migrate
 doctrine-apply-migration: doctrine-reset doctrine-migration doctrine-reset  ## Apply doctrine migrate and reset database
 
 fixtures-load: #doctrine-reset ## Load fixtures

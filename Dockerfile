@@ -10,7 +10,8 @@ RUN apk add --no-cache \
     ttf-dejavu \
     ;
 
-RUN chsh -s $(which zsh)
+
+COPY --link docker/app.ini $PHP_INI_DIR/conf.d/
 
 EXPOSE 80
 CMD ["symfony", "serve", "--no-tls", "--allow-http", "--port=80"]
