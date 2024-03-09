@@ -122,4 +122,4 @@ Le présent règlement est affiché dans les locaux et sur le site internet de l
 stagiaire.
 
 Fait à {{ company.city }}<br >
-Le {{ contract.createdAt|date("d F Y") }}
+Le {{ contract.createdAt | format_datetime('medium', 'none', timezone="Europe/Paris", locale='fr') }}

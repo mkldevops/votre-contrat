@@ -1,3 +1,97 @@
+### **Entre l'organisme de formation : {{ company.name }}**
+
+immatriculée au RCS de sous le numéro {{ company.rcs }}<br>
+Dont le siège social est situé {{ company.address }} {{ company.postcode }} {{ company.city }}.
+
+Représentée aux fins des présentes par {{ company.representative }} en sa qualité de représentant, dûment habilité(e).<br>
+Déclaration d’activité n°{{ company.activityNumber }} auprès de la préfecture de la région Marseille.
+
+**Ci-après dénommée « l’Organisme de Formation »**
+
+**D’une part**
+
+### **Et {{ contract.contractor }}**
+
+&nbsp;<br>
+**Ci-après dénommée « le Bénéficiaire »**
+
+**D’autre part**
+
+### **Ci-après individuellement ou collectivement désigné(s) la ou les « Partie(s) »**
+
+Il est conclu un contrat de formation professionnelle conformément aux dispositions des articles L. 6311-1 à L.
+6363-2 du Code du Travail, et également en application des dispositions du Livre III de la 6ème partie et des
+catégories prévues à l’article L6313.1 du Code du Travail relatif à la formation professionnelle continue tout au
+long de la vie
+
+## **1. Objet du contrat**
+
+Aux termes du présent contrat, l’Organisme de Formation s’engage à organiser l’action de formation suivante :
+
+TP Secrétaire comptable (27H)
+
+Catégorie de l'action de formation (art. L6313-1 du code du travail) :
+
+#### **Action de formation**
+
+Objectifs : Perfectionnement, élargissement des compétences<br>
+Contenu de l’action de formation et moyens prévus : Annexe 1<br>
+Durée : {{ contract.duration }} heures ({{ contract.days| number_format(1) }} jours)<br>
+Lieu de la formation : {{ contract.location.value | trans }}<br>
+
+<div class="mt-3">
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Lieu</th>
+        </tr>
+        <tr>
+            <td>du {{ contract.startAt | format_datetime('medium', 'none', timezone="Europe/Paris", locale='fr') }} au {{ contract.endAt | format_datetime('medium', 'none', timezone="Europe/Paris", locale='fr') }}</td>
+            <td>{{ contract.duration }}</td>
+            <td>{{ contract.location.value | trans }}</td>
+    </table>
+</div>
+
+## **2. Effectif formé**
+
+Public visé au sens de l’article L 6313-3 du Code du Travail :
+* les actions de formation ont pour objet de permettre à toute personne sans qualification professionnelle ou
+sans contrat de travail d'accéder dans les meilleures conditions à un emploi
+* favoriser l'adaptation des travailleurs à leur poste de travail, à l'évolution des emplois ainsi que leur
+maintien dans l'emploi et de participer au développement des compétences en lien ou non avec leur poste
+de travail. Elles peuvent permettre à des travailleurs d'acquérir une qualification plus élevée
+* réduire, pour les travailleurs dont l'emploi est menacé, les risques résultant d'une qualification inadaptée à
+l'évolution des techniques et des structures des entreprises, en les préparant à une mutation d'activité soit
+dans le cadre, soit en dehors de leur entreprise. Elles peuvent permettre à des salariés dont le contrat de
+travail est rompu d'accéder à des emplois exigeant une qualification différente, ou à des nonsalariés
+d'accéder à de nouvelles activités professionnelles
+* favoriser la mobilité professionnelle.
+
+## **3. Prix de la formation**
+
+En contrepartie de cette action de formation, le bénéficiaire (ou le financeur dans le cadre d'une subrogation de
+paiement) s'acquittera des coûts suivants qui couvrent l'intégralité des frais engagés par l'organisme de
+formation pour cette session
+
+<table class="table">
+    <tr>
+        <th>Description</th>
+        <th class="text-right">Prix</th>
+    </tr>
+    <tr>
+        <td>Formation {{ contract.location.value | trans }}</td>
+        <td class="text-right">{{ contract.amount | number_format(2, ',', ' ') }}€</td>
+</table>
+
+Coût total HT : {{ contract.amount | number_format(2, ',', ' ') }}€<br>
+**TOTAL TTC : {{ contract.amount | number_format(2, ',', ' ') }}€**
+
+## **4. Modalités de déroulement (présentiel, à distance, mixte, en situation de travail) et de suivi**
+
+La Formation s’effectue Formation à distance.<br>
+Des feuilles de présence seront signées par les Stagiaires et le(s) formateur(s) par demi-journée de formation, l'objectif étant de justifier la réalisation de la Formation.<br>
+L’appréciation des résultats se fera à travers la mise en œuvre QCM et/ou grilles d’évaluation et/ou travaux pratiques et/ou fiches d’évaluation et/ou mises en situation et/ou autre.
 
 ## **5. Moyens de sanction (diplôme, titre professionnel, certification, attestation de fin de formation ou autres)**
 À l’issue de la Formation, l’Organisme de Formation délivre au Stagiaire le en cas de réussite.
@@ -33,4 +127,4 @@ politique de confidentialité.
 
 Si une contestation ou un différend ne peuvent être réglés à l’amiable, le Tribunal de Marseille sera seul compétent pour régler le litige.
 
-Document réalisé en 2 exemplaires à {{ company.city }}, le {{ contract.createdAt|date('d F Y') }}
+Document réalisé en 2 exemplaires à {{ company.city }}, le {{ contract.createdAt | format_datetime('medium', 'none', timezone="Europe/Paris", locale='fr') }}

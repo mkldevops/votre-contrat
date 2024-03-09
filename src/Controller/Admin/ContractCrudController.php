@@ -32,7 +32,7 @@ class ContractCrudController extends AbstractCrudController
             ->setHtmlAttributes(['target' => '_blank'])
         ;
 
-        $contract = Action::new('contract', 'Contract')
+        $contract = Action::new('contract', 'HTML')
             ->linkToRoute('app_contract', static fn (Contract $contract): array => ['id' => $contract->getId()])
             ->setHtmlAttributes(['target' => '_blank'])
         ;
