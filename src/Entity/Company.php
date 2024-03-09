@@ -45,6 +45,9 @@ class Company implements EntityInterface
     #[ORM\Column(length: 255)]
     private ?string $representative = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $rcs = null;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
@@ -187,6 +190,18 @@ class Company implements EntityInterface
     public function setRepresentative(string $representative): static
     {
         $this->representative = $representative;
+
+        return $this;
+    }
+
+    public function getRcs(): ?string
+    {
+        return $this->rcs;
+    }
+
+    public function setRcs(string $rcs): static
+    {
+        $this->rcs = $rcs;
 
         return $this;
     }

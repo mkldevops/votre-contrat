@@ -5,3 +5,7 @@ App\Entity\User:
   user_admin (extends user):
     email: "admin@gmail.com"
     roles: ["ROLE_ADMIN"]
+  user_roumaissa (extends user):
+    email: cscosmetics1@yahoo.com
+    fullname: "Roumaissa Menasri"
+    roles: ["ROLE_ADMIN"]

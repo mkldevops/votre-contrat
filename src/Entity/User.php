@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $fullname = null;
+
     public function __toString(): string
     {
         return (string) $this->email;
@@ -107,5 +110,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getFullname(): ?string
+    {
+        return $this->fullname;
+    }
+
+    public function setFullname(?string $fullname): static
+    {
+        $this->fullname = $fullname;
+
+        return $this;
     }
 }

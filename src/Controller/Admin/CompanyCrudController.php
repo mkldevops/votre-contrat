@@ -27,6 +27,9 @@ class CompanyCrudController extends AbstractCrudController
         yield TextField::new('address');
         yield TextField::new('postcode');
         yield TextField::new('city');
+        yield TextField::new('activityNumber');
+        yield TextField::new('representative');
+        yield TextField::new('rcs');
         yield ImageField::new('picture')
             ->setUploadDir('public/uploads/pictures')
             ->setBasePath('uploads/pictures');
