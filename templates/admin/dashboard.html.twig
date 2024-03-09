@@ -1,0 +1,28 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block content_title %}
+    <div class="text-center">Manage your formations</div>
+{% endblock %}
+{% block main %}
+    <div class="container">
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>count contracts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in contractsCompany %}
+                    <tr>
+                        <td>
+                            <img class="bg-white border rounded mr-5" src="{{ asset('uploads/pictures/' ~ company.picture) }}" alt="logo" style="width: 30px; height: 30px;">&nbsp;
+                            <span>{{ company.name }}</span>
+                        </td>
+                        <td>{{ company.contract_count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

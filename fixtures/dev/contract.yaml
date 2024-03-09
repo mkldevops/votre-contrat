@@ -13,3 +13,10 @@ App\Entity\Contract:
     endAt: <(new DateTimeImmutable('+27days 08:00'))>
     location: !php/enum App\Entity\Enum\LocationEnum::OnSite
     author: "@user_roumaissa"
+  contract_web_developer_fares:
+    contractor: "Fares Al Amin"
+    formation: "@formation_web_developer"
+    startAt: <(new DateTimeImmutable('+11days 08:00'))>
+    endAt: <(new DateTimeImmutable('+23days 08:00'))>
+    location: !php/enum App\Entity\Enum\LocationEnum::Remote
+    author: "@user_roumaissa"

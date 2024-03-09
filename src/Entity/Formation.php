@@ -8,6 +8,7 @@ use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\FormationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 class Formation implements EntityInterface
@@ -15,28 +16,36 @@ class Formation implements EntityInterface
     use IdEntityTrait;
     use TimestampableEntityTrait;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     #[ORM\Column]
     private ?float $price = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[Assert\NotBlank]
     #[ORM\ManyToOne(inversedBy: 'formations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     #[ORM\Column]
     private ?int $duration = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private TemplateEnum $template = TemplateEnum::basic;
 
     public function __toString(): string
     {
-        return (string) $this->name;
+        return sprintf('[ %s ] - %s', $this->company?->getName(), $this->name);
     }
 
     public function getName(): ?string

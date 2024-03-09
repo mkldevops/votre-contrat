@@ -8,6 +8,7 @@ use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\ContractRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContractRepository::class)]
 class Contract implements EntityInterface
@@ -15,28 +16,40 @@ class Contract implements EntityInterface
     use IdEntityTrait;
     use TimestampableEntityTrait;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $contractor = null;
 
+    #[Assert\NotBlank]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Formation $formation = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     #[ORM\Column]
     private ?float $amount = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private ?DateTimeImmutable $startAt = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private ?DateTimeImmutable $endAt = null;
 
-    #[ORM\Column(length: 255, options: ['default' => LocationEnum::OnSite->value])]
+    #[Assert\NotBlank]
+    #[ORM\Column(length: 50, options: ['default' => LocationEnum::OnSite->value])]
     private ?LocationEnum $location = LocationEnum::OnSite;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fileContract = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     #[ORM\Column]
     private ?int $duration = null;
 

@@ -21,28 +21,20 @@ class ContractRepository extends ServiceEntityRepository
         parent::__construct($registry, Contract::class);
     }
 
-    //    /**
-    //     * @return Contract[] Returns an array of Contract objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Contract
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return array<array-key, array{company: string, contract_count: string}>
+     */
+    public function countByCompany(): array
+    {
+        /**
+         * @var array<array-key, array{company: string, contract_count: string}>
+         */
+        return $this->createQueryBuilder('c')
+            ->select('company.id, company.name, company.picture, count(c.id) as contract_count')
+            ->innerJoin('c.formation', 'f')
+            ->innerJoin('f.company', 'company')
+            ->groupBy('company.id')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

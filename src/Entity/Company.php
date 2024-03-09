@@ -8,6 +8,7 @@ use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
 class Company implements EntityInterface
@@ -15,6 +16,8 @@ class Company implements EntityInterface
     use IdEntityTrait;
     use TimestampableEntityTrait;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -24,27 +27,44 @@ class Company implements EntityInterface
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Formation::class, orphanRemoval: true)]
     private Collection $formations;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 6)]
     #[ORM\Column(length: 6)]
     private ?string $postcode = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 100)]
     #[ORM\Column(length: 100)]
     private ?string $city = null;
 
+    #[Assert\Email]
+    #[Assert\Length(max: 180)]
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/^((\+33)?\(0\))?\d+$/')]
+    #[Assert\Length(min: 8, max: 20)]
     #[ORM\Column(length: 20)]
     private ?string $phone = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $activityNumber = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $representative = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 100)]
     #[ORM\Column(length: 100)]
     private ?string $rcs = null;
 
