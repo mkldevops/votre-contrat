@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240309094532 extends AbstractMigration
+final class Version20240309212404 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,8 +21,11 @@ final class Version20240309094532 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE company (id UUID NOT NULL, name VARCHAR(255) NOT NULL, picture VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, postcode VARCHAR(6) NOT NULL, city VARCHAR(100) NOT NULL, email VARCHAR(180) NOT NULL, phone VARCHAR(20) NOT NULL, activity_number VARCHAR(255) NOT NULL, representative VARCHAR(255) NOT NULL, rcs VARCHAR(100) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_ACTIVITY_NUMBER ON company (activity_number)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_RCS ON company (rcs)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_NAME ON company (name)');
         $this->addSql('COMMENT ON COLUMN company.id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE contract (id UUID NOT NULL, formation_id UUID NOT NULL, author_id UUID NOT NULL, contractor VARCHAR(255) NOT NULL, amount DOUBLE PRECISION NOT NULL, start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, end_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, location VARCHAR(255) DEFAULT \'On site\' NOT NULL, file_contract VARCHAR(255) DEFAULT NULL, duration INT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE contract (id UUID NOT NULL, formation_id UUID NOT NULL, author_id UUID NOT NULL, contractor VARCHAR(255) NOT NULL, contractor_mail VARCHAR(180) NOT NULL, amount DOUBLE PRECISION NOT NULL, start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, end_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, location VARCHAR(50) DEFAULT \'On site\' NOT NULL, file_contract VARCHAR(255) DEFAULT NULL, duration INT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_E98F28595200282E ON contract (formation_id)');
         $this->addSql('CREATE INDEX IDX_E98F2859F675F31B ON contract (author_id)');
         $this->addSql('COMMENT ON COLUMN contract.id IS \'(DC2Type:uuid)\'');

@@ -24,6 +24,12 @@ class Contract implements AuthorEntityInterface
     private ?string $contractor = null;
 
     #[Assert\NotBlank]
+    #[Assert\Email]
+    #[Assert\Length(max: 180)]
+    #[ORM\Column(length: 180)]
+    private ?string $contractorMail = null;
+
+    #[Assert\NotBlank]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Formation $formation = null;
@@ -177,6 +183,18 @@ class Contract implements AuthorEntityInterface
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getContractorMail(): ?string
+    {
+        return $this->contractorMail;
+    }
+
+    public function setContractorMail(string $contractorMail): static
+    {
+        $this->contractorMail = $contractorMail;
 
         return $this;
     }

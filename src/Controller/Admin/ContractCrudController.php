@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -52,6 +53,7 @@ class ContractCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm();
         yield FormField::addFieldset('Main Information');
         yield TextField::new('contractor');
+        yield EmailField::new('contractorMail');
         yield MoneyField::new('amount')
             ->setCurrency('EUR')
             ->setStoredAsCents(false)
