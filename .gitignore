@@ -34,3 +34,4 @@ phpstan.neon
 ###< friendsofphp/php-cs-fixer ###
 .idea
 .vscode
+.phpunit.cache
