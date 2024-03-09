@@ -8,8 +8,9 @@
         <table class="table mt-5">
             <thead>
                 <tr>
-                    <th>Company</th>
-                    <th>count contracts</th>
+                    <th>{{ 'Company'|trans }}</th>
+                    <th class="text-center">{{ 'Count contracts'|trans }}</th>
+                    <th class="text-end">{{ 'Total amount'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +20,8 @@
                             <img class="bg-white border rounded mr-5" src="{{ asset('uploads/pictures/' ~ company.picture) }}" alt="logo" style="width: 30px; height: 30px;">&nbsp;
                             <span>{{ company.name }}</span>
                         </td>
-                        <td>{{ company.contract_count }}</td>
+                        <td class="text-center">{{ company.contract_count }}</td>
+                        <td class="text-end">{{ company.total_amount|number_format(2, ',', ' ') }}€</td>
                     </tr>
                 {% endfor %}
             </tbody>

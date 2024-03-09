@@ -50,132 +50,13 @@
                 <img src="{{ absolute_url(asset('uploads/pictures/'~ company.picture)) }}" alt="{{ absolute_url(asset('uploads/pictures/'~ company.picture)) }}" width="100" />
             </div>
         </div>
-        <div class="text-center mt-5">
-            <h3><strong>Contrat de formation professionnelle</strong></h3>
+        <div class="text-center my-5">
+            <h2><strong>Contrat de formation professionnelle</strong></h2>
             <div>
                 <strong>
                     <small>(Article L. 6353-1 du Code du Travail Décret N° 2018-1341 du 28 décembre 2018)</small>
                 </strong>
             </div>
-        </div>
-        <div class="mt-3">
-            <div><strong>Entre l'organisme de formation : {{ company.name }}</strong></div>
-            <div>immatriculée au RCS de sous le numéro {{ company.rcs }}</div>
-            <div>Dont le siège social est situé {{ company.address }} {{ company.postcode }} {{ company.city }}.</div>
-        </div>
-        <div class="mt-3">
-            <div>
-                Représentée aux fins des présentes par {{ company.representative }} en sa qualité de représentant,
-                dûment habilité(e).
-            </div>
-            <div>
-                Déclaration d’activité n°{{ company.activityNumber }} auprès de la préfecture de la région Marseille.
-            </div>
-        </div>
-        <div class="mt-3"><strong>Ci-après dénommée « l’Organisme de Formation »</strong></div>
-        <div class="mt-3"><strong>D’une part</strong></div>
-        <h3 class="mt-3"><strong>Et {{ contract.contractor }} </strong></h3>
-        <div class="mt-3"><strong>Ci-après dénommée « le Bénéficiaire »</strong></div>
-        <div class="mt-3"><strong>D’autre part</strong></div>
-        <h3 class="mt-3">
-            <strong>Ci-après individuellement ou collectivement désigné(s) la ou les « Partie(s) »</strong>
-        </h3>
-        <div class="mt-3">
-            Il est conclu un contrat de formation professionnelle conformément aux dispositions des articles L. 6311-1 à
-            L. 6363-2 du Code du Travail, et
-            également en application des dispositions du Livre III de la 6ème partie et des catégories prévues à
-            l’article L6313.1 du Code du Travail relatif à la
-            formation professionnelle continue tout au long de la vie
-        </div>
-        <h2 class="mt-3"><strong>1. Objet du contrat</strong></h2>
-        <div class="mt-3">
-            Aux termes du présent contrat, l’Organisme de Formation s’engage à organiser l’action de
-            formation suivante :
-        </div>
-        <div class="mt-3">TP Secrétaire comptable (27H)</div>
-        <div class="mt-3">Catégorie de l'action de formation (art. L6313-1 du code du travail) : </div>
-        <div class="mt-3"><strong>Action de formation</strong></div>
-        <div class="mt-3">
-            <div>Objectifs : Perfectionnement, élargissement des compétences</div>
-            <div>Contenu de l’action de formation et moyens prévus : Annexe 1</div>
-            <div>Durée : <strong>{{ contract.duration }} heures ({{ contract.days| number_format(1) }} jours)</strong></div>
-            <div>Lieu de la formation : <strong>{{ contract.location.value | trans }}</strong></div>
-        </div>
-        <div class="mt-3">
-            <table class="table">
-                <tr>
-                    <th>Date</th>
-                    <th>Heure</th>
-                    <th>Lieu</th>
-                </tr>
-                <tr>
-                    <td>du {{ contract.startAt | date('d F Y') }} au {{ contract.endAt | date('d F Y') }}</td>
-                    <td>{{ contract.duration }}</td>
-                    <td>{{ contract.location.value | trans }}</td>
-            </table>
-        </div>
-
-        <h2 class="mt-3"><strong>2. Effectif formé</strong></h2>
-
-        <div class="mt-3">
-            <div>Public visé au sens de l’article L 6313-3 du Code du Travail :</div>
-            <ul>
-                <li>
-                    les actions de formation ont pour objet de permettre à toute personne sans qualification professionnelle ou sans contrat de travail
-                    d'accéder dans les meilleures conditions à un emploi
-                </li>
-                <li>
-                     favoriser l'adaptation des travailleurs à leur poste de travail, à l'évolution des emplois ainsi que leur maintien dans l'emploi et de participer
-                    au développement des compétences en lien ou non avec leur poste de travail. Elles peuvent permettre à des travailleurs d'acquérir une
-                    qualification plus élevée
-                </li>
-                <li>
-                    réduire, pour les travailleurs dont l'emploi est menacé, les risques résultant d'une qualification inadaptée à l'évolution des techniques et des
-                    structures des entreprises, en les préparant à une mutation d'activité soit dans le cadre, soit en dehors de leur entreprise. Elles peuvent
-                    permettre à des salariés dont le contrat de travail est rompu d'accéder à des emplois exigeant une qualification différente, ou à des nonsalariés d'accéder à de nouvelles activités professionnelles
-                </li>
-                <li>
-                    favoriser la mobilité professionnelle.
-                </li>
-            </ul>
-        </div>
-
-        <h2 class="mt-3"><strong>3. Prix de la formation</strong></h2>
-
-        <div class="mt-3">
-            En contrepartie de cette action de formation, le bénéficiaire (ou le financeur dans le cadre d'une subrogation de paiement) s'acquittera des coûts
-            suivants qui couvrent l'intégralité des frais engagés par l'organisme de formation pour cette session
-        </div>
-
-        <div class="mt-3">
-            <table class="table">
-                <tr>
-                    <th>Description</th>
-                    <th class="text-right">Prix</th>
-                </tr>
-                <tr>
-                    <td>Formation {{ contract.location.value | trans }}</td>
-                    <td class="text-right">{{ contract.amount | number_format(2) }}</td>
-            </table>
-        </div>
-
-        <div class="mt-3">
-            <div>Coût total HT : {{ contract.amount | number_format(2) }}€</div>
-            <div><strong>TOTAL TTC : <span>{{ contract.amount | number_format(2) }}€</span></strong></div>
-        </div>
-
-        <h2 class="mt-3">
-            <strong>
-                4. Modalités de déroulement (présentiel, à distance, mixte, en situation de travail) et de suivi
-            </strong>
-        </h2>
-
-        <div class="mt-3">
-            <div>La Formation s’effectue Formation à distance.</div>
-            <div>Des feuilles de présence seront signées par les Stagiaires et le(s) formateur(s) par demi-journée de formation, l'objectif étant de justifier la
-            réalisation de la Formation.</div>
-                <div>L’appréciation des résultats se fera à travers la mise en œuvre QCM et/ou grilles d’évaluation et/ou travaux pratiques et/ou fiches d’évaluation
-            et/ou mises en situation et/ou autre.</div>
         </div>
 
         {{ include('formations_templates/sections/contract.markdown.twig')|markdown_to_html }}
@@ -192,7 +73,7 @@
             </div>
         </div>
     </section>
-    <section>
+    <section class="container mt-5">
         <h2 class="mb-3 text-center"><strong>Annexe 1 : Programme de formation</strong></h2>
 
         {{ include('formations_templates/sections/program.markdown.twig')|markdown_to_html }}

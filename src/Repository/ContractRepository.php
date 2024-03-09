@@ -30,7 +30,7 @@ class ContractRepository extends ServiceEntityRepository
          * @var array<array-key, array{company: string, contract_count: string}>
          */
         return $this->createQueryBuilder('c')
-            ->select('company.id, company.name, company.picture, count(c.id) as contract_count')
+            ->select('company.id, company.name, company.picture, count(c.id) as contract_count, sum(c.amount) as total_amount')
             ->innerJoin('c.formation', 'f')
             ->innerJoin('f.company', 'company')
             ->groupBy('company.id')
