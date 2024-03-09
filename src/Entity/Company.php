@@ -8,9 +8,16 @@ use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'There is already a company with this name')]
+#[UniqueEntity(fields: ['activityNumber'], message: 'There is already a company with this activity number')]
+#[UniqueEntity(fields: ['rcs'], message: 'There is already a company with this RCS')]
+#[ORM\UniqueConstraint(name: 'UNIQ_ACTIVITY_NUMBER', fields: ['activityNumber'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_RCS', fields: ['rcs'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_NAME', fields: ['name'])]
 class Company implements EntityInterface
 {
     use IdEntityTrait;
