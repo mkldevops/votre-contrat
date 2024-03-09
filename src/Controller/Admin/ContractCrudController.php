@@ -52,7 +52,7 @@ class ContractCrudController extends AbstractCrudController
 
         yield IdField::new('id')->hideOnForm();
         yield FormField::addFieldset('Main Information');
-        yield TextField::new('contractor');
+        yield TextField::new('contractorName');
         yield EmailField::new('contractorMail');
         yield MoneyField::new('amount')
             ->setCurrency('EUR')

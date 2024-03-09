@@ -1,41 +1,28 @@
 App\Entity\Contract:
-  contract_esthetic_center_ahmed:
-    contractor: "Ahmed Salah"
-    contractorMail: "ahmed.salah@gmail.fr"
+  contract_template (template):
+    contractorName: "<firstName()> <lastName()>"
+    contractorMail: "<email()>"
+    location: !php/enum App\Entity\Enum\LocationEnum::Remote
+    author: "@user_roumaissa"
+  contract_esthetic_center_ahmed (extends contract_template):
     formation: "@formation_esthetic"
     startAt: <(new DateTimeImmutable('+3days 08:00'))>
     endAt: <(new DateTimeImmutable('+15days 08:00'))>
     location: !php/enum App\Entity\Enum\LocationEnum::OnSite
-    author: "@user_roumaissa"
-  contract_web_developer_djamal:
-    contractor: "Djamal Ben Salam"
-    contractorMail: "d.bensalam@outlook.fr"
+  contract_web_developer_djamal (extends contract_template):
     formation: "@formation_web_developer"
     startAt: <(new DateTimeImmutable('+15days 08:00'))>
     endAt: <(new DateTimeImmutable('+27days 08:00'))>
     location: !php/enum App\Entity\Enum\LocationEnum::OnSite
-    author: "@user_roumaissa"
-  contract_web_developer_fares:
-    contractor: "Fares Al Amin"
-    contractorMail: "fares.a.amin@hotmail.fr"
+  contract_web_developer_fares (extends contract_template):
     formation: "@formation_web_developer"
     startAt: <(new DateTimeImmutable('+11days 08:00'))>
     endAt: <(new DateTimeImmutable('+23days 08:00'))>
-    location: !php/enum App\Entity\Enum\LocationEnum::Remote
-    author: "@user_roumaissa"
-  contract_web_developer_jibril:
-    contractor: "Jibril Salim"
-    contractorMail: "jibril.salim@gmail.fr"
+  contract_web_developer_jibril (extends contract_template):
     formation: "@formation_make_up"
     startAt: <(new DateTimeImmutable('+68days 08:00'))>
     endAt: <(new DateTimeImmutable('+80days 08:00'))>
-    location: !php/enum App\Entity\Enum\LocationEnum::Remote
-    author: "@user_roumaissa"
-  contract_web_developer_asma:
-    contractor: "Asma Chakir"
-    contractorMail: "asma@gmail.fr"
+  contract_web_developer_asma (extends contract_template):
     formation: "@formation_make_up"
     startAt: <(new DateTimeImmutable('-68days 08:00'))>
     endAt: <(new DateTimeImmutable('-54days 08:00'))>
-    location: !php/enum App\Entity\Enum\LocationEnum::Remote
-    author: "@user_roumaissa"
