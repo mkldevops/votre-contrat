@@ -19,7 +19,7 @@ class AdminDashboardControllerTest extends WebTestCase
 
         static::assertResponseIsSuccessful();
         static::assertRouteSame('app_login');
-        static::assertSelectorTextContains('h1', 'Please sign in');
+        static::assertSelectorTextContains('h1', 'App formation');
     }
 
     public function testAdminDashboard(): void
