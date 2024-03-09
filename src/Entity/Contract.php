@@ -21,7 +21,7 @@ class Contract implements AuthorEntityInterface
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
-    private ?string $contractor = null;
+    private ?string $contractorName = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]
@@ -65,17 +65,17 @@ class Contract implements AuthorEntityInterface
 
     public function __toString(): string
     {
-        return $this->contractor.' - '.$this->formation?->getName();
+        return $this->contractorName.' - '.$this->formation?->getName();
     }
 
-    public function getContractor(): ?string
+    public function getContractorName(): ?string
     {
-        return $this->contractor;
+        return $this->contractorName;
     }
 
-    public function setContractor(string $contractor): static
+    public function setContractorName(string $contractorName): static
     {
-        $this->contractor = $contractor;
+        $this->contractorName = $contractorName;
 
         return $this;
     }
