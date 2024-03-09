@@ -6,12 +6,14 @@ use App\Entity\Enum\LocationEnum;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\ContractRepository;
+use App\Validator\ContraintStartsDate;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContractRepository::class)]
-class Contract implements EntityInterface
+#[ContraintStartsDate]
+class Contract implements AuthorEntityInterface
 {
     use IdEntityTrait;
     use TimestampableEntityTrait;
@@ -43,8 +45,6 @@ class Contract implements EntityInterface
     #[ORM\Column(length: 50, options: ['default' => LocationEnum::OnSite->value])]
     private ?LocationEnum $location = LocationEnum::OnSite;
 
-    #[Assert\NotBlank]
-    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fileContract = null;
 
