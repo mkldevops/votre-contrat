@@ -61,7 +61,7 @@ jobs:
             docker volume create ${{env.CONTAINER_NAME}}-var
             docker volume create ${{env.CONTAINER_NAME}}-uploads
             
-            docker rm -f ${{env.CONTAINER_NAME}} || true
+            docker stop ${{env.CONTAINER_NAME}} || true && docker rm ${{env.CONTAINER_NAME}} || true
             
             docker run -it --rm --name ${{env.CONTAINER_NAME}} -p ${{env.PORT}}:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
             
