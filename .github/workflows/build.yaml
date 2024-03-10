@@ -32,7 +32,7 @@ jobs:
             env=stage
           fi
         
-          echo "REPOSITORY_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
+          echo "CONTAINER_NAME=${{ github.event.repository.name }}-$env" >> $GITHUB_ENV
           echo "ENV=$env" >> $GITHUB_ENV
           echo "PORT=$port" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:$tag" >> $GITHUB_ENV
@@ -58,13 +58,17 @@ jobs:
           script: |
             docker pull ${{env.DOCKER_IMAGE_NAME}}
             
-            docker run -it --rm --name ${{env.REPOSITORY_NAME}}-$ENV -p $PORT:80 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
-           
+            docker volume create ${{env.CONTAINER_NAME}}-var ${{env.CONTAINER_NAME}}-uploads 
+            
+            docker run -it --rm --name ${{env.CONTAINER_NAME}} -p $PORT:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
+            
+            docker exec -ti ${{env.CONTAINER_NAME}} symfony composer install
+            
             # create database
-            docker exec -ti cs-cosmetics symfony console d:d:c --if-not-exists
+            docker exec -ti ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists
             
             # run migrations
-            docker exec -ti cs-cosmetics symfony console d:m:m -n
+            docker exec -ti ${{env.CONTAINER_NAME}} symfony console d:m:m -n
             
             # list running containers
             docker ps
