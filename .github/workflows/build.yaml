@@ -55,23 +55,21 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          script: |
-            docker pull ${{env.DOCKER_IMAGE_NAME}}
+          script: |            
+            docker volume create ${{env.CONTAINER_NAME}}-var;
+            docker volume create ${{env.CONTAINER_NAME}}-uploads;
             
-            docker volume create ${{env.CONTAINER_NAME}}-var
-            docker volume create ${{env.CONTAINER_NAME}}-uploads
+            docker stop ${{env.CONTAINER_NAME}} || true;
             
-            docker stop ${{env.CONTAINER_NAME}} || true && docker rm ${{env.CONTAINER_NAME}} || true
+            docker run --pull always -it --rm --name ${{env.CONTAINER_NAME}} -p ${{env.PORT}}:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}};
             
-            docker run -it --rm --name ${{env.CONTAINER_NAME}} -p ${{env.PORT}}:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
-            
-            docker exec -ti ${{env.CONTAINER_NAME}} symfony composer install
+            docker exec -ti ${{env.CONTAINER_NAME}} symfony composer install;
             
             # create database
-            docker exec -ti ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists
+            docker exec -ti ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists;
             
             # run migrations
-            docker exec -ti ${{env.CONTAINER_NAME}} symfony console d:m:m -n
+            docker exec -ti ${{env.CONTAINER_NAME}} symfony console d:m:m -n;
             
             # list running containers
-            docker ps
+            docker ps;
