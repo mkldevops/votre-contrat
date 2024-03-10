@@ -5,7 +5,7 @@ docker build --target prod -t mkldevops/cs-cosmetics .
 
 ### Run project
 ```bash
-docker run -it --rm --name cs-cosmetics -p 8021:80 -e DATABASE_URL=postgresql://app:CiaLhPYpThbLIVD@techndcall.com:5432/cs-cosmetics -e APP_SECRET=488e51ef0817b160814bb98691c14e29 -d mkldevops/cs-cosmetics
+docker run -it --rm --name cs-cosmetics -p 8021:80 -e DATABASE_URL=$DATABASE_URL_POSTGRES -e APP_SECRET=$(echo openssl rand -base64 32) -d mkldevops/cs-cosmetics
 ```
 
 ### Run zsh

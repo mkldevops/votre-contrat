@@ -3,7 +3,7 @@ ifneq ("$(wildcard .env.local)","")
 	include .env.local
 endif
 
-isContainerRunning := $(shell docker info > /dev/null 2>&1 && docker ps | grep "${PROJECT_NAME}-api" > /dev/null 2>&1 && echo 1 || echo 0)
+isContainerRunning := $(shell docker ps > /dev/null 2>&1 && docker ps | grep "${PROJECT_NAME}-app" > /dev/null 2>&1 && echo 1 || echo 0)
 
 env			= dev
 DOCKER		= docker compose
@@ -11,9 +11,14 @@ COMPOSER	= symfony composer
 CONSOLE		= APP_ENV=$(env) symfony console
 GIT			= @git
 
+ifeq ($(isContainerRunning), 1)
+	DOCKER	= docker exec -it $(PROJECT_NAME)-app
+	COMPOSER= docker exec -it $(PROJECT_NAME)-app symfony composer
+endif
+
 .DEFAULT_GOAL := sync
 
-sync: composer-install docker-up sf-serve doctrine-reset fixtures-load ## Install and load
+sync: composer-install db-reset fixtures-load ## Install and load
 
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?## .*$$)|(^## )' Makefile | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
@@ -50,8 +55,8 @@ doctrine-migrate: ## Apply doctrine migrate
 doctrine-schema-create:
 	$(CONSOLE) doctrine:schema:create
 
-db-reset: database-drop databasecreate doctrine-migrate
-doctrine-apply-migration: doctrine-reset doctrine-migration doctrine-reset  ## Apply doctrine migrate and reset database
+db-reset: database-drop database-create doctrine-migrate
+doctrine-apply-migration: db-reset doctrine-migration db-reset  ## Apply doctrine migrate and reset database
 
 fixtures-load: #doctrine-reset ## Load fixtures
 	$(CONSOLE) hautelook:fixtures:load -n $q
