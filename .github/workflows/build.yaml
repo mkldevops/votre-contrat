@@ -58,7 +58,7 @@ jobs:
           script: |
             docker pull ${{env.DOCKER_IMAGE_NAME}}
             
-            docker run -it --rm --name ${{env.REPOSITORY_NAME}}-$ -p $PORT:80 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
+            docker run -it --rm --name ${{env.REPOSITORY_NAME}}-$ENV -p $PORT:80 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
            
             # create database
             docker exec -ti cs-cosmetics symfony console d:d:c --if-not-exists
