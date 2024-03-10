@@ -58,7 +58,8 @@ jobs:
           script: |
             docker pull ${{env.DOCKER_IMAGE_NAME}}
             
-            docker volume create ${{env.CONTAINER_NAME}}-var ${{env.CONTAINER_NAME}}-uploads 
+            docker volume create ${{env.CONTAINER_NAME}}-var
+            docker volume create ${{env.CONTAINER_NAME}}-uploads 
             
             docker run -it --rm --name ${{env.CONTAINER_NAME}} -p $PORT:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
             
