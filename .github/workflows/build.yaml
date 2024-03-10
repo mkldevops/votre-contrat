@@ -35,7 +35,7 @@ jobs:
           echo "REPOSITORY_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
           echo "ENV=$env" >> $GITHUB_ENV
           echo "PORT=$port" >> $GITHUB_ENV
-          echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/${{env.REPOSITORY_NAME}}:$tag" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/$REPOSITORY_NAME:$tag" >> $GITHUB_ENV
       - # Add support for more platforms with QEMU (optional)
         # https://github.com/docker/setup-qemu-action
         name: Set up QEMU
