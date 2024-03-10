@@ -63,7 +63,8 @@ jobs:
             
             docker run --pull always -it --rm --name ${{env.CONTAINER_NAME}} -p ${{env.PORT}}:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}};
             
-            docker exec -ti ${{env.CONTAINER_NAME}} symfony composer install;
+            docker exec -i ${{env.CONTAINER_NAME}} symfony composer install;
+            docker exec -i ${{env.CONTAINER_NAME}} chmod -R 777 var/ public/uploads/;
             
             # create database
             docker exec -ti ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists;
