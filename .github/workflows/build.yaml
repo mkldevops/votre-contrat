@@ -27,7 +27,8 @@ jobs:
           elif [[ ${{github.ref}} == 'refs/heads/main' ]]; then
               tag=latest
           fi
-          echo "TAG=$tag" >> $GITHUB_ENV
+          
+          echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/${{env.REPOSITORY_NAME}}:$tag" >> $GITHUB_ENV
       - # Add support for more platforms with QEMU (optional)
         # https://github.com/docker/setup-qemu-action
         name: Set up QEMU
@@ -40,7 +41,7 @@ jobs:
           platforms: linux/amd64, linux/arm64
           target: prod
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{env.REPOSITORY_NAME}}:${{env.TAG}}
+          tags: ${{env.DOCKER_IMAGE_NAME}}
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -48,12 +49,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker run -it --rm \
-              --name cs-cosmetics \
-              -p 8020:80 \
-              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-              -e APP_SECRET=${{ secrets.APP_SECRET }} -d 
-              mkldevops/cs-cosmetics
+            docker run -it --rm --name ${{env.REPOSITORY_NAME}} -p 8020:80 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}}
            
             # create database
             docker exec -ti cs-cosmetics symfony console d:d:c --if-not-exists
