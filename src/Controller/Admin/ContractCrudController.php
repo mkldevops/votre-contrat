@@ -7,6 +7,7 @@ use App\Entity\Enum\LocationEnum;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -43,6 +44,17 @@ class ContractCrudController extends AbstractCrudController
             ->add(Crud::PAGE_DETAIL, $contractPDF)
             ->add(Crud::PAGE_INDEX, $contract)
             ->add(Crud::PAGE_DETAIL, $contract)
+        ;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('formation')
+            ->add('contractorName')
+            ->add('contractorMail')
+            ->add('amount')
+            ->add('location')
         ;
     }
 
