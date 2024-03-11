@@ -27,13 +27,29 @@ class CompanyCrudController extends AbstractCrudController
 
         yield FormField::addFieldset('IDs Informations');
         yield IdField::new('id')->hideOnForm();
-        yield TextField::new('activityNumber')->hideOnIndex();
-        yield TextField::new('rcs')->hideOnIndex();
+        yield TextField::new('activityNumber')
+            ->hideOnIndex()
+            ->setHtmlAttributes([
+                'pattern' => '^\d+$',
+                'title' => 'The RCS number is a number composed of digits',
+                'placeholder' => 'Enter a valid RCS number composed of digits',
+            ]);
+        yield TextField::new('rcs')
+            ->hideOnIndex()
+            ->setHtmlAttributes([
+                'pattern' => '^\d+$',
+                'title' => 'The RCS number is a number composed of digits',
+                'placeholder' => 'Enter a valid RCS number composed of digits',
+            ]);
 
         yield FormField::addFieldset('Main Information');
         yield TextField::new('name');
         yield EmailField::new('email');
-        yield TelephoneField::new('phone');
+        yield TelephoneField::new('phone')
+            ->setHtmlAttributes([
+                'pattern' => '^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$',
+                'placeholder' => 'Ex: 0123456789, +33 1 23 45 67 89, ...',
+            ]);
         yield TextField::new('representative')->hideOnIndex();
 
         yield AssociationField::new('formations')->hideOnForm();
@@ -49,7 +65,7 @@ class CompanyCrudController extends AbstractCrudController
         $image = ImageField::new('picture')
             ->setUploadDir('public/uploads/pictures')
             ->setBasePath('uploads/pictures')
-            ->setUploadedFileNamePattern('[year]/[month]/[day]/[slug]-[contenthash].[extension]');
+            ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]');
 
         if (Action::EDIT == $pageName) {
             $image->setFormTypeOptions(['allow_delete' => false])
