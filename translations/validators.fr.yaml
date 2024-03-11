@@ -1,1 +1,8 @@
-The start date must be greater than end date. : La date de début doit être supérieure à la date de fin.
+The start date must be greater than end date : La date de début doit être supérieure à la date de fin
+There is already a company with this name : Il existe déjà une entreprise avec ce nom
+There is already a company with this activity number : Il existe déjà une entreprise avec ce numéro d'activité
+There is already a company with this RCS : Il existe déjà une entreprise avec ce RCS
+"The phone number is not valid, it must be a French phone number (Ex: +33 1 23 54 78 96)." : "Le numéro de téléphone n'est pas valide, il doit être un numéro de téléphone français (Ex: +33 1 23 54 78 96)."
+The RCS is not valid, it must be a digits number : Le RCS n'est pas valide, il doit être composé de chiffres
+The activity number is not valid, it must be a digits number : Le numéro d'activité n'est pas valide, il doit être composé de chiffres
+  

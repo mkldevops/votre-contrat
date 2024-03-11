@@ -55,14 +55,18 @@ class Company implements EntityInterface
     private ?string $email = null;
 
     #[Assert\NotBlank]
-    #[Assert\Regex(pattern: '/^((\+33)?\(0\))?\d+$/')]
+    #[Assert\Regex(
+        pattern: '/^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$/',
+        message: 'The phone number is not valid, it must be a French phone number (Ex: +33 1 23 54 78 96).'
+    )]
     #[Assert\Length(min: 8, max: 20)]
     #[ORM\Column(length: 20)]
     private ?string $phone = null;
 
     #[Assert\NotBlank]
-    #[Assert\Length(max: 255)]
-    #[ORM\Column(length: 255)]
+    #[Assert\Regex('/^\d+$/', message: 'The activity number is not valid, it must be a digits number')]
+    #[Assert\Length(max: 50)]
+    #[ORM\Column(length: 50)]
     private ?string $activityNumber = null;
 
     #[Assert\NotBlank]
@@ -71,8 +75,9 @@ class Company implements EntityInterface
     private ?string $representative = null;
 
     #[Assert\NotBlank]
-    #[Assert\Length(max: 100)]
-    #[ORM\Column(length: 100)]
+    #[Assert\Regex('/^\d+$/', message: 'The RCS is not valid, it must be a digits number')]
+    #[Assert\Length(max: 50)]
+    #[ORM\Column(length: 50)]
     private ?string $rcs = null;
 
     public function __construct()
