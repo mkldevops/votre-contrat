@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  app:
+    image: ${DOCKER_IMAGE_NAME}:latest
+    ports:
+      - "8020:80"
+    environment:
+      APP_ENV: ${APP_ENV:-prod}
+      # You should definitely change the password in production
+      DATABASE_URL: pgsql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-password}@database/${POSTGRES_DB:-app}
+      APP_SECRET: ${APP_SECRET}
+    depends_on:
+      - database
+    volumes:
+      - ./var:/srv/app/var:rw,cached
+      - .:/srv/app:rw,cached
+  
+  ###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - ./var/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+  ###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
