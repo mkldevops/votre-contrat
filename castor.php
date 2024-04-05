@@ -3,13 +3,14 @@
 use Castor\Attribute\AsContext;
 use Castor\Attribute\AsTask;
 use Castor\Context;
+use Symfony\Component\Process\Process;
 
 use function Castor\io;
 use function Castor\load_dot_env;
 use function Castor\log;
 use function Castor\run;
 
-enum Environment: string
+enum castor: string
 {
     case DEV = 'dev';
     case PROD = 'prod';
@@ -36,7 +37,7 @@ function build(): void
 }
 
 #[AsTask(description: 'deploy project')]
-function deploy(string $env = Environment::DEV->value): void
+function deploy(string $env = 'prod'): void
 {
     io()->info('Deploying project to '.$env);
     run(
@@ -45,10 +46,23 @@ function deploy(string $env = Environment::DEV->value): void
     );
 
     io()->info('Running migrations');
-    run('docker compose -f compose.prod.yaml exec app symfony console doctrine:migrations:migrate --no-interaction');
+    dockerExec('symfony composer install', $env);
+
+    io()->info('Running migrations');
+    dockerExec('symfony console doctrine:migrations:migrate --no-interaction', $env);
 
     io()->info('Clearing cache');
-    run('docker compose -f compose.prod.yaml exec app symfony console cache:clear');
+    dockerExec('symfony console cache:clear', $env);
+}
+
+#[AsTask(description: 'Execute docker exec command')]
+function dockerExec(string $command, string $env = 'dev'): Process
+{
+    io()->info('Executing command '.$command.' in '.$env.' environment');
+
+    return run(
+        command: sprintf('docker compose -f compose.prod.yaml exec app %s', $command)
+    );
 }
 
 #[AsTask(description: 'Push frankenphp image')]
