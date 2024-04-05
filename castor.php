@@ -9,7 +9,7 @@ use function Castor\load_dot_env;
 use function Castor\log;
 use function Castor\run;
 
-enum castor: string
+enum Environment: string
 {
     case DEV = 'dev';
     case PROD = 'prod';

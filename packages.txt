@@ -1,0 +1,1 @@
+ii  monarx-protect-autodetect         5.0.162-master                 amd64        For use with the monarx-protect package. When installed will auto-discover php locations for most default configurations and setup extension and ini files.
