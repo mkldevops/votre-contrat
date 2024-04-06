@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional\Admin;
 
+use Override;
 use App\Controller\Admin\CompanyCrudController;
 use App\Entity\Company;
 use App\Repository\CompanyRepository;
@@ -21,6 +22,7 @@ class CompanyAdminCrudTest extends WebTestCase
 
     private static KernelBrowser $client;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

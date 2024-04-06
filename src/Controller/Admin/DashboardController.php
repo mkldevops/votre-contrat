@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use Override;
 use App\Entity\Company;
 use App\Entity\Contract;
 use App\Entity\Formation;
@@ -33,6 +34,7 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+    #[Override]
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -41,12 +43,14 @@ class DashboardController extends AbstractDashboardController
             ->renderContentMaximized();
     }
 
+    #[Override]
     public function configureActions(): Actions
     {
         return parent::configureActions()
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
+    #[Override]
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');

@@ -2,6 +2,7 @@
 
 namespace App\Validator;
 
+use Override;
 use App\Entity\Contract;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class ContraintStartsDateValidator extends ConstraintValidator
 {
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof ContraintStartsDate) {

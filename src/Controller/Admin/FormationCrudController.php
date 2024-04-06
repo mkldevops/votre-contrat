@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use Override;
 use App\Entity\Enum\TemplateEnum;
 use App\Entity\Formation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -18,11 +19,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class FormationCrudController extends AbstractCrudController
 {
+    #[Override]
     public static function getEntityFqcn(): string
     {
         return Formation::class;
     }
 
+    #[Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
@@ -31,6 +34,7 @@ class FormationCrudController extends AbstractCrudController
         ;
     }
 
+    #[Override]
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(8);

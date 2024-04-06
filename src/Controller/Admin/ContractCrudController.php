@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use Override;
 use App\Entity\Contract;
 use App\Entity\Enum\LocationEnum;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -22,11 +23,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ContractCrudController extends AbstractCrudController
 {
+    #[Override]
     public static function getEntityFqcn(): string
     {
         return Contract::class;
     }
 
+    #[Override]
     public function configureActions(Actions $actions): Actions
     {
         $contractPDF = Action::new('contractPDF', 'PDF')
@@ -47,6 +50,7 @@ class ContractCrudController extends AbstractCrudController
         ;
     }
 
+    #[Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
@@ -58,6 +62,7 @@ class ContractCrudController extends AbstractCrudController
         ;
     }
 
+    #[Override]
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(8);

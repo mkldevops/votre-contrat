@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional\Admin;
 
+use Override;
 use App\Controller\Admin\FormationCrudController;
 use App\Repository\FormationRepository;
 use App\Tests\Trait\GetUserTrait;
@@ -20,6 +21,7 @@ class FormationAdminCrudTest extends WebTestCase
 
     private static KernelBrowser $client;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

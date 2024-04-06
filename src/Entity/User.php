@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Override;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\UserRepository;
@@ -43,6 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fullname = null;
 
+    #[Override]
     public function __toString(): string
     {
         return (string) $this->email;
@@ -65,6 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
      *
      * @see UserInterface
      */
+    #[Override]
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
@@ -75,6 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
      *
      * @return list<string>
      */
+    #[Override]
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -97,6 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
     /**
      * @see PasswordAuthenticatedUserInterface
      */
+    #[Override]
     public function getPassword(): string
     {
         return (string) $this->password;
@@ -112,6 +117,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
     /**
      * @see UserInterface
      */
+    #[Override]
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here

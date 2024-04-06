@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Override;
 use App\Entity\Enum\TemplateEnum;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
@@ -43,6 +44,7 @@ class Formation implements EntityInterface
     #[ORM\Column(length: 255)]
     private TemplateEnum $template = TemplateEnum::basic;
 
+    #[Override]
     public function __toString(): string
     {
         return sprintf('[ %s ] - %s', $this->company?->getName(), $this->name);

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Override;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\CompanyRepository;
@@ -85,6 +86,7 @@ class Company implements EntityInterface
         $this->formations = new ArrayCollection();
     }
 
+    #[Override]
     public function __toString(): string
     {
         return (string) $this->name;

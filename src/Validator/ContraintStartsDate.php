@@ -2,6 +2,7 @@
 
 namespace App\Validator;
 
+use Override;
 use Attribute;
 use Symfony\Component\Validator\Constraint;
 
@@ -18,6 +19,7 @@ final class ContraintStartsDate extends Constraint
         $this->message = $message ?? $this->message;
     }
 
+    #[Override]
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

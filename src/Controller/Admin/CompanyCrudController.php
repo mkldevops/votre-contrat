@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use Override;
 use App\Entity\Company;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -16,11 +17,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CompanyCrudController extends AbstractCrudController
 {
+    #[Override]
     public static function getEntityFqcn(): string
     {
         return Company::class;
     }
 
+    #[Override]
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(8);
@@ -67,7 +70,7 @@ class CompanyCrudController extends AbstractCrudController
             ->setBasePath('uploads/pictures')
             ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]');
 
-        if (Action::EDIT == $pageName) {
+        if (Action::EDIT === $pageName) {
             $image->setFormTypeOptions(['allow_delete' => false])
                 ->setRequired(false);
         }

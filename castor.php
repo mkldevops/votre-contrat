@@ -7,19 +7,12 @@ use Symfony\Component\Process\Process;
 
 use function Castor\io;
 use function Castor\load_dot_env;
-use function Castor\log;
 use function Castor\run;
-
-enum castor: string
-{
-    case DEV = 'dev';
-    case PROD = 'prod';
-}
 
 #[AsContext()]
 function my_context(): Context
 {
-    log('Loading context');
+    io()->note('Loading context');
 
     return new Context(load_dot_env());
 }
@@ -27,7 +20,7 @@ function my_context(): Context
 #[AsTask(description: 'Build frankenphp image')]
 function build(): void
 {
-    $result = run('/usr/local/bin/docker build -t $DOCKER_IMAGE_NAME -f $PWD/frankenphp.Dockerfile .');
+    $result = run('/usr/local/bin/docker build -t $DOCKER_IMAGE_NAME .');
 
     if ($result->isSuccessful()) {
         io()->success('Build executed successfully');
@@ -65,7 +58,7 @@ function dockerExec(string $command, string $env = 'dev'): Process
     );
 }
 
-#[AsTask(description: 'Push frankenphp image')]
+#[AsTask(description: 'Push image')]
 function push(): void
 {
     $login = run('/usr/local/bin/docker login');
@@ -73,11 +66,9 @@ function push(): void
         io()->error('Login failed');
     }
 
-    $result = run('/usr/local/bin/docker push mkldevops/moncontrat');
+    $result = run('/usr/local/bin/docker push $DOCKER_IMAGE_NAME');
 
     if ($result->isSuccessful()) {
         io()->success('Push executed successfully');
-    } else {
-        io()->error('Command failed '.$result->getOutput());
     }
 }
