@@ -2,8 +2,8 @@
 
 namespace App\Validator;
 
-use Override;
 use App\Entity\Contract;
+use Override;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

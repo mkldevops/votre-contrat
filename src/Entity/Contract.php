@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Override;
 use App\Entity\Enum\LocationEnum;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
@@ -10,6 +9,7 @@ use App\Repository\ContractRepository;
 use App\Validator\ContraintStartsDate;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContractRepository::class)]

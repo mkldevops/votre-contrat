@@ -26,8 +26,6 @@ services:
       # You should definitely change the password in production
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       POSTGRES_USER: ${POSTGRES_USER:-app}
-    networks:
-      - caddy_network
     volumes:
       - ./var/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
@@ -36,8 +34,3 @@ volumes:
   ###> doctrine/doctrine-bundle ###
   database_data:
 ###< doctrine/doctrine-bundle ###
-
-networks:
-  caddy_network:
-    external: true
-    name: caddy_network_shared

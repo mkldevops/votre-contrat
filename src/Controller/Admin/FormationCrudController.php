@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use Override;
 use App\Entity\Enum\TemplateEnum;
 use App\Entity\Formation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -16,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Override;
 
 class FormationCrudController extends AbstractCrudController
 {

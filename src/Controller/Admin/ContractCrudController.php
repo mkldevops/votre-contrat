@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use Override;
 use App\Entity\Contract;
 use App\Entity\Enum\LocationEnum;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -20,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Override;
 
 class ContractCrudController extends AbstractCrudController
 {
