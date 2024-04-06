@@ -49,12 +49,36 @@ function deploy(string $env = 'prod'): void
 }
 
 #[AsTask(description: 'Execute docker exec command')]
-function dockerExec(string $command, string $env = 'dev'): Process
+function dockerExec(string $command, string $service, string $env = 'dev'): Process
 {
-    io()->info('Executing command '.$command.' in '.$env.' environment');
+    return docker(
+        command: sprintf('exec %s %s', $service, $command)
+    );
+}
+
+#[AsTask(description: 'Execute docker exec command')]
+function dockerLogs(string $command, ?string $service = null, bool $follow = false): Process
+{
+    return docker(
+        command: sprintf('logs %s %s %s', $service, $command, $follow ? '-f' : '')
+    );
+}
+
+#[AsTask(description: 'Execute docker ps')]
+function dockerPs(bool $all = false): Process
+{
+    return docker(
+        command: sprintf('ps %s', $all ? '-a' : '')
+    );
+}
+
+#[AsTask(description: 'Execute docker exec command')]
+function docker(string $command): Process
+{
+    io()->info('Executing docker command : '.$command);
 
     return run(
-        command: sprintf('docker compose -f compose.prod.yaml exec app %s', $command)
+        command: sprintf('docker compose -f compose.prod.yaml %s', $command)
     );
 }
 
