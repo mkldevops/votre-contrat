@@ -10,8 +10,6 @@ services:
       APP_SECRET: ${APP_SECRET}
     depends_on:
       - database
-    networks:
-      - caddy_network
     volumes:
       - ./var:/srv/app/var:rw,cached
       - .:/srv/app:rw,cached
