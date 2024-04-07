@@ -33,27 +33,27 @@ function build(): void
 function deploy(string $env = 'prod'): void
 {
     io()->info('Deploying project to '.$env);
-    run(
-        command: 'docker compose -f compose.prod.yaml up -d --pull always --remove-orphans --wait',
-        environment: ['APP_ENV' => $env]
-    );
+    docker(command: 'up -d --pull always --remove-orphans --wait');
 
     io()->info('Running migrations');
-    dockerExec('symfony composer install', $env);
+    dockerExec('symfony composer install', env: $env);
 
     io()->info('Running migrations');
-    dockerExec('symfony console doctrine:migrations:migrate --no-interaction', $env);
+    dockerExec('symfony console doctrine:migrations:migrate --no-interaction', env: $env);
 
     io()->info('Clearing cache');
-    dockerExec('symfony console cache:clear', $env);
+    dockerExec('symfony console cache:clear', env: $env);
 }
 
 #[AsTask(description: 'Execute docker exec command')]
-function dockerExec(string $command, string $service, string $env = 'dev'): Process
+function dockerExec(string $command, string $service = 'app', string $env = 'dev'): Process
 {
-    return docker(
-        command: sprintf('exec %s %s', $service, $command)
-    );
+    return docker(sprintf(
+        'exec %s %s %s',
+        $env ? '-e APP_ENV='.$env : '',
+        $service,
+        $command
+    ));
 }
 
 #[AsTask(description: 'Execute docker exec command')]
