@@ -43,6 +43,9 @@ function deploy(string $env = 'prod'): void
 
     io()->info('Clearing cache');
     dockerExec('symfony console cache:clear', env: $env);
+
+    io()->info('chmod cache & logs');
+    dockerExec('chmod -R 777 var public/uploads', env: $env);
 }
 
 #[AsTask(description: 'Execute docker exec command')]
