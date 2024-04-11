@@ -9,6 +9,7 @@ use App\Repository\ContractRepository;
 use App\Validator\ContraintStartsDate;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContractRepository::class)]
@@ -63,6 +64,7 @@ class Contract implements AuthorEntityInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
+    #[Override]
     public function __toString(): string
     {
         return $this->contractorName.' - '.$this->formation?->getName();
@@ -175,11 +177,13 @@ class Contract implements AuthorEntityInterface
         return $this;
     }
 
+    #[Override]
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    #[Override]
     public function setAuthor(?User $author): static
     {
         $this->author = $author;

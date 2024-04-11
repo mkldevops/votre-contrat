@@ -13,14 +13,17 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Override;
 
 class CompanyCrudController extends AbstractCrudController
 {
+    #[Override]
     public static function getEntityFqcn(): string
     {
         return Company::class;
     }
 
+    #[Override]
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(8);
@@ -67,7 +70,7 @@ class CompanyCrudController extends AbstractCrudController
             ->setBasePath('uploads/pictures')
             ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]');
 
-        if (Action::EDIT == $pageName) {
+        if (Action::EDIT === $pageName) {
             $image->setFormTypeOptions(['allow_delete' => false])
                 ->setRequired(false);
         }

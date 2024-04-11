@@ -8,6 +8,7 @@ use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -85,6 +86,7 @@ class Company implements EntityInterface
         $this->formations = new ArrayCollection();
     }
 
+    #[Override]
     public function __toString(): string
     {
         return (string) $this->name;

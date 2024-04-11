@@ -67,7 +67,7 @@ jobs:
             docker exec -i ${{env.CONTAINER_NAME}} chmod -R 777 var/ public/uploads/;
             
             # create database
-            docker exec -ivb ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists;
+            docker exec -i ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists;
             
             # run migrations
             docker exec -i ${{env.CONTAINER_NAME}} symfony console d:m:m -n;

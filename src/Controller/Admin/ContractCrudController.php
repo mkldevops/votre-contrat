@@ -19,14 +19,17 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Override;
 
 class ContractCrudController extends AbstractCrudController
 {
+    #[Override]
     public static function getEntityFqcn(): string
     {
         return Contract::class;
     }
 
+    #[Override]
     public function configureActions(Actions $actions): Actions
     {
         $contractPDF = Action::new('contractPDF', 'PDF')
@@ -47,6 +50,7 @@ class ContractCrudController extends AbstractCrudController
         ;
     }
 
+    #[Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
@@ -58,6 +62,7 @@ class ContractCrudController extends AbstractCrudController
         ;
     }
 
+    #[Override]
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(8);

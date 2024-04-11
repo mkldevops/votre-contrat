@@ -8,6 +8,7 @@ use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\FormationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
@@ -43,6 +44,7 @@ class Formation implements EntityInterface
     #[ORM\Column(length: 255)]
     private TemplateEnum $template = TemplateEnum::basic;
 
+    #[Override]
     public function __toString(): string
     {
         return sprintf('[ %s ] - %s', $this->company?->getName(), $this->name);

@@ -7,6 +7,7 @@ use App\Repository\FormationRepository;
 use App\Tests\Trait\GetUserTrait;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -20,6 +21,7 @@ class FormationAdminCrudTest extends WebTestCase
 
     private static KernelBrowser $client;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

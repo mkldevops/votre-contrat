@@ -35,3 +35,4 @@ phpstan.neon
 .idea
 .vscode
 .phpunit.cache
+.castor.stub.php
