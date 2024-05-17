@@ -125,7 +125,9 @@ function deploy(): void
 function push(?string $message = null, bool $noRebase = false): void
 {
     analyze();
+    contextTest();
     testAll();
+
     commit($message, $noRebase);
     gitPush();
 }
