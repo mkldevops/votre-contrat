@@ -6,6 +6,7 @@ use Castor\Attribute\AsTask;
 
 use function Castor\capture;
 use function Castor\io;
+use function Castor\variable;
 use function quality\analyze;
 use function quality\csFix;
 use function quality\phpstan;
@@ -56,7 +57,7 @@ function autoCommit(?string $message = null): void
 function rebase(): void
 {
     run('git pull --rebase');
-    run('git pull --rebase origin develop');
+    run('git pull --rebase origin '.variable('DEFAULT_BRANCH', 'main'));
 }
 
 #[AsTask(description: 'git commit and push')]
