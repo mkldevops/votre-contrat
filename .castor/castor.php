@@ -126,6 +126,7 @@ function push(?string $message = null, bool $noRebase = false): void
 {
     analyze();
     contextTest();
+    \Castor\run('echo $APP_ENV');
     testAll();
 
     commit($message, $noRebase);
