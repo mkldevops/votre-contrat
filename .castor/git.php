@@ -28,20 +28,15 @@ function message(): string
     return $message;
 }
 
-#[AsTask(description: 'git commit and push')]
+#[AsTask(description: 'git commit and rebase')]
 function commit(?string $message = null, bool $noRebase = false): void
 {
     io()->title('Committing and pushing');
-
-    analyze();
-    testAll();
 
     autoCommit($message);
     if (!$noRebase) {
         rebase();
     }
-
-    push();
 }
 
 #[AsTask(description: 'git auto commit')]

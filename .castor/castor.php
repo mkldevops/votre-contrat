@@ -4,18 +4,19 @@ use Castor\Attribute\AsContext;
 use Castor\Attribute\AsTask;
 use Castor\Context;
 
-use function app\configEnv;
 use function Castor\import;
 use function Castor\io;
 use function Castor\load_dot_env;
 use function Castor\log;
 use function Castor\variable;
 use function git\commit;
+use function git\push as gitPush;
+use function quality\analyze;
 use function symfony\console;
 use function docker\exec as dockerExec;
 use function docker\up as dockerUp;
-use function app\migrationProcess;
 use function docker\compose;
+use function test\all as testAll;
 
 
 import(__DIR__);
@@ -71,16 +72,10 @@ function install(): void
 {
     io()->title('Installing project');
 
-    sync(dropDatabase: false, fixture: true);
+    sync(dropDatabase: false, noFixtures: false);
     dockerUp(build: true);
 
     io()->success('Project installed');
-}
-
-#[AsTask(description: 'Install project')]
-function gitCommit(?string $message = null, bool $noRebase = false): void
-{
-    commit($message, $noRebase);
 }
 
 #[AsTask(description: 'Install project')]
@@ -124,4 +119,13 @@ function deploy(): void
 
     io()->info('chmod cache & logs');
     dockerExec('chmod -R 777 var public/uploads');
+}
+
+#[AsTask(description: 'Git commit and push')]
+function push(?string $message = null, bool $noRebase = false): void
+{
+    analyze();
+    testAll();
+    commit($message, $noRebase);
+    gitPush();
 }
