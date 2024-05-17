@@ -57,7 +57,7 @@ class CompanyAdminCrudTest extends WebTestCase
 
         static::assertResponseIsSuccessful();
         static::assertResponseHeaderSame('content-type', 'text/html; charset=UTF-8');
-        static::assertSelectorTextContains('h1.title', $entity->__toString());
+        static::assertSelectorTextContains('h1.title', 'Société');
     }
 
     #[Test]

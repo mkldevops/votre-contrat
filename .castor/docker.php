@@ -50,8 +50,9 @@ function isContainerRunning(): bool
 }
 
 #[AsTask(description: 'Execute docker exec command')]
-function exec(string $command, string $service = 'php', bool $silent = false): Process
+function exec(string $command, string $service = null, bool $silent = false): Process
 {
+    $service ??= variable('DOCKER_SERVICE_NAME_PHP', 'php');
     if (!isContainerRunning()) {
         return run($command);
     }

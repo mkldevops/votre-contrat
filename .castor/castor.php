@@ -6,8 +6,6 @@ use Castor\Context;
 
 use function app\configEnv;
 use function Castor\import;
-use function Castor\context;
-use function Castor\run;
 use function Castor\io;
 use function Castor\load_dot_env;
 use function Castor\log;
@@ -73,7 +71,6 @@ function install(): void
 {
     io()->title('Installing project');
 
-    configEnv();
     sync(dropDatabase: false, fixture: true);
     dockerUp(build: true);
 
@@ -87,13 +84,16 @@ function gitCommit(?string $message = null, bool $noRebase = false): void
 }
 
 #[AsTask(description: 'Install project')]
-function sync(bool $dropDatabase = true, bool $fixture = false): void
+function sync(bool $dropDatabase = true, bool $noFixtures = true): void
 {
     dockerUp();
 
-    dockerExec('composer install');
-    dockerExec('npm install');
-    dockerExec('npm run dev');
+    dockerExec('symfony composer install');
+
+    if(file_exists('package.json')) {
+        dockerExec('npm install');
+        dockerExec('npm run dev');
+    }
 
     if ($dropDatabase) {
         console('doctrine:database:drop --force --if-exists');
@@ -102,8 +102,8 @@ function sync(bool $dropDatabase = true, bool $fixture = false): void
     console('doctrine:database:create --if-not-exists');
     console('doctrine:migrations:migrate --no-interaction');
 
-    if ($fixture) {
-        migrationProcess();
+    if ($noFixtures === false) {
+        console('hautelook:fixtures:load --no-interaction');
     }
 }
 

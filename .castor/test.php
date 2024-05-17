@@ -12,7 +12,6 @@ use function symfony\console;
 function phpunit(): void
 {
     if('test' !== variable('APP_ENV')) {
-        dump(variable('APP_ENV'));
         io()->error('This task can only be executed in test environment');
         return;
     }
