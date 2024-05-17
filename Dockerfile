@@ -1,4 +1,4 @@
-FROM mkldevops/php-fpm-alpine:8.3 as base
+FROM mkldevops/php-fpm-alpine:latest as base
 
 RUN apk add --no-cache \
     weasyprint \

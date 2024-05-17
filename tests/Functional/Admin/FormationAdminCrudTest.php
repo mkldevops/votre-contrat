@@ -3,6 +3,7 @@
 namespace App\Tests\Functional\Admin;
 
 use App\Controller\Admin\FormationCrudController;
+use App\Entity\Formation;
 use App\Repository\FormationRepository;
 use App\Tests\Trait\GetUserTrait;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA;
@@ -49,12 +50,12 @@ class FormationAdminCrudTest extends WebTestCase
     public function view(): void
     {
         $entity = self::getContainer()->get(FormationRepository::class)->findOneBy([]);
-        self::assertNotNull($entity);
+        self::assertInstanceOf(Formation::class, $entity);
         self::$client->request(Request::METHOD_GET, $this->urlGenerator->setAction('detail')->setEntityId($entity->getId())->generateUrl());
 
         static::assertResponseIsSuccessful();
         static::assertResponseHeaderSame('content-type', 'text/html; charset=UTF-8');
-        static::assertSelectorTextContains('h1.title', $entity->__toString());
+        static::assertSelectorTextContains('h1.title', 'Formation');
     }
 
     #[Test]
