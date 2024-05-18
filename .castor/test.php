@@ -4,6 +4,7 @@ namespace test;
 
 use Castor\Attribute\AsTask;
 use function Castor\io;
+use function Castor\run;
 use function Castor\variable;
 use function docker\exec as dockerExec;
 use function symfony\console;
@@ -11,21 +12,13 @@ use function symfony\console;
 #[AsTask(description: 'Execute tests')]
 function phpunit(): void
 {
-    if('test' !== variable('APP_ENV')) {
-        io()->error('This task can only be executed in test environment');
-        return;
-    }
-
-    dockerExec('php bin/phpunit');
+    run('php bin/phpunit', environment: ['APP_ENV' => 'test']);
 }
 
-#[AsTask(description: 'Execute tests', enabled: "var('APP_ENV') == 'test'")]
+#[AsTask(description: 'Execute tests')]
 function all(): void
 {
-    if('test' !== variable('APP_ENV')) {
-        io()->error('This task can only be executed in test environment');
-        return;
-    }
+    $environment = ['APP_ENV' => 'test'];
 
     // check if vendor is installed
     if (!file_exists('vendor/autoload.php')) {
@@ -41,9 +34,9 @@ function all(): void
     }
 
     io()->section('Running tests');
-    console('cache:clear', silent: true);
-    console('doctrine:schema:drop --force --full-database', silent: true);
-    console('doctrine:schema:update --force', silent: true);
-    console('doctrine:fixtures:load --no-interaction', silent: true);
+    run('symfony console cache:clear', $environment);
+    run('symfony console doctrine:schema:drop --force --full-database', $environment);
+    run('symfony console doctrine:schema:update --force', $environment);
+    run('symfony console hautelook:fixtures:load --no-interaction', $environment);
     phpunit();
 }

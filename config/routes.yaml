@@ -4,6 +4,12 @@ controllers:
     namespace: App\Controller
   type: attribute
 
+contract_controllers:
+  resource:
+    path: ../src/Contract/
+    namespace: App\Contract
+  type: attribute
+  
 homepage:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction

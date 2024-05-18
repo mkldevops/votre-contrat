@@ -82,6 +82,11 @@ class Contract implements AuthorEntityInterface
         return $this;
     }
 
+    public function getTemplatePath(): ?string
+    {
+        return $this->formation?->getTemplate()->getTemplatePath();
+    }
+
     public function getFormation(): ?Formation
     {
         return $this->formation;
