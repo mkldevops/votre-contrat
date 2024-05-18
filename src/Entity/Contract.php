@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Enum\LocationEnum;
+use App\Entity\Enum\StatusEnum;
 use App\Entity\Trait\IdEntityTrait;
 use App\Entity\Trait\TimestampableEntityTrait;
 use App\Repository\ContractRepository;
@@ -50,7 +51,7 @@ class Contract implements AuthorEntityInterface
 
     #[Assert\NotBlank]
     #[ORM\Column(length: 50, options: ['default' => LocationEnum::OnSite->value])]
-    private ?LocationEnum $location = LocationEnum::OnSite;
+    private LocationEnum $location = LocationEnum::OnSite;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fileContract = null;
@@ -63,6 +64,10 @@ class Contract implements AuthorEntityInterface
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(length: 20, options: ['default' => StatusEnum::Draft->value])]
+    private StatusEnum $status = StatusEnum::Draft;
 
     #[Override]
     public function __toString(): string
@@ -146,7 +151,7 @@ class Contract implements AuthorEntityInterface
         return (int) $this->startAt->diff($this->endAt)->days;
     }
 
-    public function getLocation(): ?LocationEnum
+    public function getLocation(): LocationEnum
     {
         return $this->location;
     }
@@ -204,6 +209,18 @@ class Contract implements AuthorEntityInterface
     public function setContractorMail(string $contractorMail): static
     {
         $this->contractorMail = $contractorMail;
+
+        return $this;
+    }
+
+    public function getStatus(): StatusEnum
+    {
+        return $this->status;
+    }
+
+    public function setStatus(StatusEnum $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }
