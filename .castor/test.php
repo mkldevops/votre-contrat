@@ -38,5 +38,6 @@ function all(): void
     run('symfony console doctrine:schema:drop --force --full-database', $environment);
     run('symfony console doctrine:schema:update --force', $environment);
     run('symfony console hautelook:fixtures:load --no-interaction', $environment);
+
     phpunit();
 }

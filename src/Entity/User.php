@@ -47,7 +47,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityI
     #[Override]
     public function __toString(): string
     {
-        return (string) $this->email;
+        $text = $this->email ?? '';
+        if (null !== $this->fullname) {
+            $text .= ' ('.$this->fullname.')';
+        }
+
+        return $text;
     }
 
     public function getEmail(): ?string
