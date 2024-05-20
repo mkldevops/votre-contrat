@@ -55,4 +55,4 @@ jobs:
             cd ./${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}
             git pull --rebase
             
-            castor deploy:branch ${{ github.ref }}
+            castor deploy:branch ${GITHUB_REF_NAME}
