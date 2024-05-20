@@ -49,10 +49,10 @@ jobs:
           script: |
             cd /app
             
-            test -d /app/${{ github.event.repository.name }}/${{ github.ref }} || \
-              git clone ${{ github.repository }} /app/${{ github.event.repository.name }}/${{ github.ref }} -b ${{ github.ref }}
+            test -d /app/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME} || \
+              git clone git@github.com:mkldevops/votre-contrat.git  /app/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME} -b ${GITHUB_REF_NAME}
             
-            cd ./${{ github.event.repository.name }}/${{ github.ref }}
+            cd ./${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}
             git pull --rebase
             
             castor deploy:branch ${{ github.ref }}
