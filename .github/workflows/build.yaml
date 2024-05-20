@@ -47,5 +47,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /app/${{ github.event.repository.name }}
+            cd /app
+            
+            test -d /app/${{ github.event.repository.name }}/${{ github.ref }} || \
+              git clone ${{ github.repository }} /app/${{ github.event.repository.name }}/${{ github.ref }} -b ${{ github.ref }}
+            
+            cd ./${{ github.event.repository.name }}/${{ github.ref }}
+            git pull --rebase
+            
             castor deploy:branch ${{ github.ref }}
