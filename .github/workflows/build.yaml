@@ -52,9 +52,10 @@ jobs:
             mkdir -p /app/${{ github.event.repository.name }}
             
             test -d /app/${{ github.event.repository.name }}/${{ env.GIT_BRANCH }} || \
-              git clone git@github.com:${{ github.repository }}.git  ./${{ github.event.repository.name }}/${{ env.GIT_BRANCH }} -b ${{ env.GIT_BRANCH }}
+              git clone git@github.com:${{ github.repository }}.git  /app/${{ github.event.repository.name }}/${{ env.GIT_BRANCH }} -b ${{ env.GIT_BRANCH }}
             
             cd /app/${{ github.event.repository.name }}/${{ env.GIT_BRANCH }}
+            
             git pull --rebase
             
             castor deploy:branch ${{ env.GIT_BRANCH }}
