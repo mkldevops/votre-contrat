@@ -47,12 +47,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /app
+            mkdir -p ${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}
             
-            test -d /app/${{ env.GITHUB_REPOSITORY }}/${{ env.GITHUB_REF_NAME }} || \
-              git clone git@github.com:${{ env.GITHUB_REPOSITORY }}.git  ./${{ env.GITHUB_REPOSITORY }}/${{ env.GITHUB_REF_NAME }} -b ${{ env.GITHUB_REF_NAME }}
+            test -d /app/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME} || \
+              git clone git@github.com:${GITHUB_REPOSITORY}.git  ./${GITHUB_REPOSITORY}/${GITHUB_REF_NAME} -b ${GITHUB_REF_NAME}
             
-            cd ./${{ env.GITHUB_REPOSITORY }}/${{ env.GITHUB_REF_NAME }}
+            cd /app/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}
             git pull --rebase
             
-            castor deploy:branch ${{ env.GITHUB_REF_NAME }}
+            castor deploy:branch ${GITHUB_REF_NAME}
