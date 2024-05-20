@@ -1,0 +1,15 @@
+meta {
+  name: ps
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost/containers/json?filters=$(echo%20-n%20%27{%22name%22:%20[%22mon-app%22]}%27%20|%20jq%20-sRr%20@uri)
+  body: none
+  auth: none
+}
+
+query {
+  filters: $(echo%20-n%20%27{%22name%22:%20[%22mon-app%22]}%27%20|%20jq%20-sRr%20@uri)
+}

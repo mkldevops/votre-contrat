@@ -20,21 +20,12 @@ jobs:
       - name: Set ENV to build
         run: |
           tag=$(echo ${{github.ref}} | sed -e 's/refs\/heads\///')
-          port=8022
-          env=dev
           if [[ ${{github.ref}} == 'refs/tags/'* ]]; then
             tag=$(echo ${{github.ref}} | sed -e 's/refs\/tags\///')
-            port=8020
-            env=prod
           elif [[ ${{github.ref}} == 'refs/heads/main' ]]; then
             tag=latest
-            port=8021
-            env=stage
           fi
-        
-          echo "CONTAINER_NAME=${{ github.event.repository.name }}-$env" >> $GITHUB_ENV
-          echo "ENV=$env" >> $GITHUB_ENV
-          echo "PORT=$port" >> $GITHUB_ENV
+          
           echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:$tag" >> $GITHUB_ENV
       - # Add support for more platforms with QEMU (optional)
         # https://github.com/docker/setup-qemu-action
@@ -55,23 +46,6 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          script: |            
-            docker volume create ${{env.CONTAINER_NAME}}-var;
-            docker volume create ${{env.CONTAINER_NAME}}-uploads;
-            
-            docker stop ${{env.CONTAINER_NAME}} || true;
-            
-            docker run --pull always -i --rm --name ${{env.CONTAINER_NAME}} -p ${{env.PORT}}:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}};
-            
-            docker exec -i ${{env.CONTAINER_NAME}} symfony composer install;
-            docker exec -i ${{env.CONTAINER_NAME}} chmod -R 777 var/ public/uploads/;
-            
-            # create database
-            docker exec -i ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists;
-            
-            # run migrations
-            docker exec -i ${{env.CONTAINER_NAME}} symfony console d:m:m -n;
-            
-            # list running containers
-            docker ps;
-            docker logs ${{env.CONTAINER_NAME}};
+          script: |
+            cd /app/${{ github.event.repository.name }}
+            castor deploy:branch ${{ github.ref }}
