@@ -58,4 +58,4 @@ jobs:
             
             git pull --rebase
             
-            castor deploy:branch ${{ env.GIT_BRANCH }}
+            castor deploy:branch --clean
