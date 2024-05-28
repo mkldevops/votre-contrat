@@ -8,70 +8,54 @@ jobs:
     name: Docker build & push image
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#      - name: Login to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Set ENV to build
         run: |
           tag=$(echo ${{github.ref}} | sed -e 's/refs\/heads\///')
-          port=8022
-          env=dev
+          GIT_BRANCH=$tag
           if [[ ${{github.ref}} == 'refs/tags/'* ]]; then
             tag=$(echo ${{github.ref}} | sed -e 's/refs\/tags\///')
-            port=8020
-            env=prod
           elif [[ ${{github.ref}} == 'refs/heads/main' ]]; then
             tag=latest
-            port=8021
-            env=stage
           fi
-        
-          echo "CONTAINER_NAME=${{ github.event.repository.name }}-$env" >> $GITHUB_ENV
-          echo "ENV=$env" >> $GITHUB_ENV
-          echo "PORT=$port" >> $GITHUB_ENV
+
+          echo "GIT_BRANCH=$GIT_BRANCH" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:$tag" >> $GITHUB_ENV
-      - # Add support for more platforms with QEMU (optional)
-        # https://github.com/docker/setup-qemu-action
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          platforms: linux/amd64, linux/arm64
-          target: prod
-          push: true
-          tags: ${{env.DOCKER_IMAGE_NAME}}
+#      - # Add support for more platforms with QEMU (optional)
+#        # https://github.com/docker/setup-qemu-action
+#        name: Set up QEMU
+#        uses: docker/setup-qemu-action@v3
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#      - name: Build and push Docker image
+#        uses: docker/build-push-action@v5
+#        with:
+#          platforms: linux/amd64, linux/arm64
+#          target: prod
+#          push: true
+#          tags: ${{env.DOCKER_IMAGE_NAME}}
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          script: |            
-            docker volume create ${{env.CONTAINER_NAME}}-var;
-            docker volume create ${{env.CONTAINER_NAME}}-uploads;
+          script: |
+            mkdir -p /app/${{ github.event.repository.name }}
             
-            docker stop ${{env.CONTAINER_NAME}} || true;
+            test -d /app/${{ github.event.repository.name }}/${{ env.GIT_BRANCH }} || \
+              git clone git@github.com:${{ github.repository }}.git  /app/${{ github.event.repository.name }}/${{ env.GIT_BRANCH }} -b ${{ env.GIT_BRANCH }}
             
-            docker run --pull always -i --rm --name ${{env.CONTAINER_NAME}} -p ${{env.PORT}}:80 -v ${{env.CONTAINER_NAME}}-var:/srv/app/var -v ${{env.CONTAINER_NAME}}-uploads:/srv/app/public/uploads -e DATABASE_URL=${{ secrets.DATABASE_URL }}-${{ env.ENV }} -e APP_SECRET=${{ secrets.APP_SECRET }} -d ${{env.DOCKER_IMAGE_NAME}};
+            cd /app/${{ github.event.repository.name }}/${{ env.GIT_BRANCH }}
             
-            docker exec -i ${{env.CONTAINER_NAME}} symfony composer install;
-            docker exec -i ${{env.CONTAINER_NAME}} chmod -R 777 var/ public/uploads/;
+            git pull --rebase
             
-            # create database
-            docker exec -i ${{env.CONTAINER_NAME}} symfony console d:d:c --if-not-exists;
-            
-            # run migrations
-            docker exec -i ${{env.CONTAINER_NAME}} symfony console d:m:m -n;
-            
-            # list running containers
-            docker ps;
-            docker logs ${{env.CONTAINER_NAME}};
+            castor deploy:branch --clean
