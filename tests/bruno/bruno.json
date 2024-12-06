@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "votrecontrat.com",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
