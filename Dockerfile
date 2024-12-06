@@ -1,4 +1,4 @@
-FROM mkldevops/php-fpm-alpine:latest as base
+FROM mkldevops/php-fpm-alpine:latest AS base
 
 RUN apk add --no-cache \
     weasyprint \
@@ -17,12 +17,12 @@ COPY --link docker/app.ini $PHP_INI_DIR/conf.d/
 EXPOSE 80
 CMD ["symfony", "serve", "--no-tls", "--allow-http", "--port=80"]
 
-FROM base as prod
+FROM base AS prod
 
 COPY --link . .
 RUN set -eux; \
 	symfony composer install --no-cache --prefer-dist --no-scripts --no-progress
 
-FROM base as dev
+FROM base AS dev
 
 ENV APP_ENV=dev

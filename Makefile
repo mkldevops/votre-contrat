@@ -12,13 +12,14 @@ CONSOLE		= APP_ENV=$(env) symfony console
 GIT			= @git
 
 ifeq ($(isContainerRunning), 1)
-	DOCKER	= docker exec -it $(PROJECT_NAME)-app
-	COMPOSER= docker exec -it $(PROJECT_NAME)-app symfony composer
+	DOCKER_EXEC	= docker exec -it -e APP_ENV=$(env) $(PROJECT_NAME)-app
+	COMPOSER	= $(DOCKER_EXEC) symfony composer
+	CONSOLE		= $(DOCKER_EXEC) symfony console
 endif
 
 .DEFAULT_GOAL := sync
 
-sync: composer-install db-reset fixtures-load ## Install and load
+sync: docker-restart composer-install db-reset fixtures-load ## Install and load
 
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?## .*$$)|(^## )' Makefile | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
@@ -91,7 +92,7 @@ test-all: ## Run all tests
 
 ## —— Git ————————————————————————————————————————————————————————————————
 git-clean-branches: ## Clean merged branches
-	git remote prune origin
+	@git remote prune origin
 	(git branch --merged | egrep -v "(^\*|main|master|dev)" | xargs git branch -d) || true
 
 git-rebase: ## Rebase the current branch
@@ -108,7 +109,7 @@ git-push:
 	$(GIT) push origin "$(current_branch)" --force-with-lease --force-if-includes
 
 #commit: q=-q
-commit: ## Commit and push the current branch
+push: ## Commit and push the current branch
 	@$(MAKE) --no-print-directory analyze
 	@$(MAKE) --no-print-directory test-all
 	@$(MAKE) --no-print-directory git-auto-commit git-rebase git-push ## Commit and push the current branch
